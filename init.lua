@@ -201,6 +201,44 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
+  {
+    'folke/trouble.nvim',
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
+      },
+    },
+  },
+
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -657,6 +695,7 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
         typescript = { { 'prettierd', 'prettier' } },
         typescriptreact = { { 'prettierd', 'prettier' } },
         c = { { 'clang-format' } },
@@ -785,16 +824,29 @@ require('lazy').setup({
   },
 
   --THEME
-  {
-    'rebelot/kanagawa.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'kanagawa'
+  -- {
+  --   'tjdevries/colorbuddy.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'gruvbuddy'
+  --   end,
+  -- },
 
-      -- You can configure highlights by doing something like:
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   priority = 1000,
+  --   init = function()
+  --     vim.cmd.colorscheme 'kanagawa'
+
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
+  {
+    'Mofiqul/dracula.nvim',
+    priority = 1000,
+    init = function()
+      vim.cmd.colorscheme 'dracula'
       vim.cmd.hi 'Comment gui=none'
     end,
   },
