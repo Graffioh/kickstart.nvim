@@ -103,10 +103,10 @@ vim.keymap.set('n', '<C-k>', ':cprev<cr>', { desc = 'Go to previous occurrence i
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+--vim.keymap.set('n', '<C-w><C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+--vim.keymap.set('n', '<C-w><C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+--vim.keymap.set('n', '<C-w><C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+--vim.keymap.set('n', '<C-w><C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>') -- toggle file explorer
 
@@ -170,11 +170,51 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
+        add = { text = '┃' },
+        change = { text = '┃' },
         delete = { text = '_' },
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
+        untracked = { text = '┆' },
+      },
+      signs_staged = {
+        add = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked = { text = '┆' },
+      },
+      signs_staged_enable = true,
+      signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+      numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+      linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+      word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+      watch_gitdir = {
+        follow_files = true,
+      },
+      auto_attach = true,
+      attach_to_untracked = false,
+      current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        delay = 1000,
+        ignore_whitespace = false,
+        virt_text_priority = 100,
+      },
+      current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+      sign_priority = 6,
+      update_debounce = 100,
+      status_formatter = nil, -- Use default
+      max_file_length = 40000, -- Disable if file is longer than this (in lines)
+      preview_config = {
+        -- Options passed to nvim_open_win
+        border = 'single',
+        style = 'minimal',
+        relative = 'cursor',
+        row = 0,
+        col = 1,
       },
     },
   },
@@ -237,6 +277,15 @@ require('lazy').setup({
         desc = 'Quickfix List (Trouble)',
       },
     },
+  },
+
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {},
+    config = function()
+      require('ibl').setup()
+    end,
   },
 
   { -- Fuzzy Finder (files, lsp, etc)
@@ -576,7 +625,7 @@ require('lazy').setup({
 
       require('dapui').setup()
       require('dap-go').setup()
-      require('nvim-dap-virtual-text').setup()
+      -- require('nvim-dap-virtual-text').setup()
 
       -- Handled by nvim-dap-go
       -- dap.adapters.go = {
@@ -711,6 +760,26 @@ require('lazy').setup({
   --   dependencies = {},
   -- },
 
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+  },
+
   -- require('oil').setup()
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -824,33 +893,32 @@ require('lazy').setup({
   },
 
   --THEME
-  -- {
-  --   'tjdevries/colorbuddy.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'gruvbuddy'
-  --   end,
-  -- },
 
-  -- {
-  --   'rebelot/kanagawa.nvim',
-  --   priority = 1000,
-  --   init = function()
-  --     vim.cmd.colorscheme 'kanagawa'
-
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
   {
-    'Mofiqul/dracula.nvim',
+    'aktersnurra/no-clown-fiesta.nvim',
+    lazy = false,
     priority = 1000,
     init = function()
-      vim.cmd.colorscheme 'dracula'
-      vim.cmd.hi 'Comment gui=none'
+      vim.cmd [[colorscheme no-clown-fiesta]]
     end,
   },
 
+  -- {
+  --   'kvrohit/rasmus.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   init = function()
+  --     vim.cmd.colorscheme 'rasmus'
+  --   end,
+  -- },
+  --  {
+  --    'Mofiqul/dracula.nvim',
+  --    priority = 1000,
+  --    init = function()
+  --      vim.cmd.colorscheme 'dracula'
+  --      vim.cmd.hi 'Comment gui=none'
+  --    end,
+  --  },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
