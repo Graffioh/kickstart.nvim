@@ -14,6 +14,7 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
+vim.opt.relativenumber = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
@@ -749,8 +750,9 @@ require('lazy').setup({
         javascriptreact = { { 'prettierd', 'prettier' } },
         typescript = { { 'prettierd', 'prettier' } },
         typescriptreact = { { 'prettierd', 'prettier' } },
-        c = { { 'clang-format' } },
-        cpp = { { 'clang-format' } },
+        c = { 'clang-format' },
+        cpp = { 'clang-format' },
+        go = { 'golines', 'goimports', 'gofumpt' },
       },
     },
   },
@@ -895,32 +897,32 @@ require('lazy').setup({
   },
 
   --THEME
+  --{
+  --  'Mofiqul/vscode.nvim',
+  --  lazy = false,
+  --  priority = 1000,
+  --  init = function()
+  --    vim.cmd [[colorscheme vscode]]
+  --  end,
+  --},
 
+  --  {
+  --    'aktersnurra/no-clown-fiesta.nvim',
+  --    lazy = false,
+  --    priority = 1000,
+  --    init = function()
+  --      vim.cmd [[colorscheme no-clown-fiesta]]
+  --    end,
+  --  },
   {
-    'aktersnurra/no-clown-fiesta.nvim',
-    lazy = false,
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     init = function()
-      vim.cmd [[colorscheme no-clown-fiesta]]
+      vim.cmd [[colorscheme catppuccin-frappe ]]
     end,
   },
 
-  -- {
-  --   'kvrohit/rasmus.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   init = function()
-  --     vim.cmd.colorscheme 'rasmus'
-  --   end,
-  -- },
-  --  {
-  --    'Mofiqul/dracula.nvim',
-  --    priority = 1000,
-  --    init = function()
-  --      vim.cmd.colorscheme 'dracula'
-  --      vim.cmd.hi 'Comment gui=none'
-  --    end,
-  --  },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
